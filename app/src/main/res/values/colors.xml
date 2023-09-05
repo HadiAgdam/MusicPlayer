@@ -5,4 +5,5 @@
     <color name="gradient_light">#D9E8F5</color>
     <color name="gradient_dark">#BBD2E8</color>
     <color name="background_dark">#14141f</color>
+    <color name="primary">#002368</color>
 </resources>

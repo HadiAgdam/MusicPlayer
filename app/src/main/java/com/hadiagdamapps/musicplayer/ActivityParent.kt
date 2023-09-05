@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.os.PersistableBundle
 import androidx.appcompat.app.AppCompatActivity
 
-abstract class ActivityParent(val layout: Int) : AppCompatActivity() {
+abstract class ActivityParent(private val layout: Int) : AppCompatActivity() {
 
 
     abstract fun main()

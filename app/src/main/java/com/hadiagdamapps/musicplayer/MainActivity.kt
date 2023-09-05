@@ -16,7 +16,7 @@ class MainActivity : ActivityParent(R.layout.activity_main) {
     private lateinit var searchBar: AppCompatEditText
 
     private val data = SongsData()
-    lateinit var songsAdapter: SongsAdapter
+    private lateinit var songsAdapter: SongsAdapter
 
     private fun initRecently() {
         val list = data.getRecentlyPlayed()

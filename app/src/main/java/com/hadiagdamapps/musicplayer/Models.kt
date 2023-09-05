@@ -4,7 +4,7 @@ class Models {
 }
 
 
-class SongModel(val name: String, val singer: String, val image: String, val liked: Boolean) {
+class SongModel(val name: String, val singer: String, val image: String, var liked: Boolean) {
     fun click() {
         TODO("IMPLEMENT THE CLICK ACTION")
     }
