@@ -4,6 +4,7 @@ import android.graphics.Bitmap
 import android.media.Image
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -39,26 +40,30 @@ import ir.hadiagdamapps.musicplayer.ui.theme.darkBackground
 
 
 @Composable
-fun SongItem(model: SongModel) {
+fun SongItem(
+    modifier: Modifier = Modifier,
+    model: SongModel,
+    onLickClick: () -> Unit,
+) {
 
     Row(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .height(80.dp)
             .padding(8.dp)
     ) {
 
-        Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier.fillMaxWidth()) {
+        Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = modifier.fillMaxWidth()) {
 
             Row {
                 Image(
-                    modifier = Modifier
+                    modifier = modifier
                         .clip(RoundedCornerShape(16)),
                     painter = painterResource(id = R.drawable.ic_launcher_background),
                     contentDescription = "Image"
                 )
                 Column(
-                    modifier = Modifier
+                    modifier = modifier
                         .fillMaxHeight()
                         .padding(horizontal = 16.dp),
                     verticalArrangement = Arrangement.Center
@@ -78,23 +83,36 @@ fun SongItem(model: SongModel) {
             }
 
 
-            Row(verticalAlignment = Alignment.CenterVertically) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = modifier.fillMaxHeight()
+            ) {
                 Icon(
-                    imageVector =
+                    painter =
+                    painterResource(
+                        id =
+                        if (model.liked) R.drawable.favorite_filled_icon
+                        else R.drawable.favorite_border_icon
+                    ), tint =
                     if (model.liked)
-                        Icons.Default.Favorite
+                        Color.Red
                     else
-                        Icons.Default.FavoriteBorder,
+                        Color.White,
                     contentDescription = "like Icon",
-                    modifier = Modifier.size(32.dp)
+                    modifier = modifier
+                        .size(28.dp)
+                        .clickable {
+                            onLickClick()
+                        }
                 )
 
-                Spacer(modifier = Modifier.width(8.dp))
+                Spacer(modifier = modifier.width(16.dp))
 
                 Icon(
-                    imageVector = Icons.Default.MoreVert,
+                    painter = painterResource(id = R.drawable.more_icon),
+                    tint = Color.White,
                     contentDescription = "options",
-                    modifier = Modifier.size(32.dp)
+                    modifier = modifier.size(28.dp)
                 )
             }
 
@@ -124,7 +142,7 @@ fun SongPreview() {
         image = "",
         name = "Name",
         artist = Artist("Artist"),
-        false
+        true
     )
 
     Column(
@@ -133,6 +151,6 @@ fun SongPreview() {
             .fillMaxSize()
     ) {
         for (i in 0 until 10)
-            SongItem(model = m)
+            SongItem(model = m) {}
     }
 }
