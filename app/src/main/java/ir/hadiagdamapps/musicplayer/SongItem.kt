@@ -43,22 +43,26 @@ import ir.hadiagdamapps.musicplayer.ui.theme.darkBackground
 fun SongItem(
     modifier: Modifier = Modifier,
     model: SongModel,
-    onLickClick: () -> Unit,
+    onLikeClick: () -> Unit,
+    onClick: () -> Unit,
+    liked: Boolean
 ) {
 
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .height(80.dp)
+            .height(64.dp)
             .padding(8.dp)
     ) {
 
-        Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = modifier.fillMaxWidth()) {
+        Row(horizontalArrangement = Arrangement.SpaceBetween,
+            modifier = modifier
+                .fillMaxWidth()
+                .clickable { onClick() }) {
 
             Row {
                 Image(
-                    modifier = modifier
-                        .clip(RoundedCornerShape(16)),
+                    modifier = modifier.clip(RoundedCornerShape(16)),
                     painter = painterResource(id = R.drawable.ic_launcher_background),
                     contentDescription = "Image"
                 )
@@ -70,41 +74,32 @@ fun SongItem(
                 ) {
                     Text(
                         text = model.name,
-                        fontSize = 22.sp,
+                        fontSize = 18.sp,
                         fontWeight = FontWeight.Bold,
                         color = Color.White,
                     )
                     Text(
-                        text = model.artist.name,
-                        fontSize = 18.sp,
-                        color = Color.Gray
+                        text = model.artist.name, fontSize = 14.sp, color = Color.Gray
                     )
                 }
             }
 
 
             Row(
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = modifier.fillMaxHeight()
+                verticalAlignment = Alignment.CenterVertically, modifier = modifier.fillMaxHeight()
             ) {
-                Icon(
-                    painter =
-                    painterResource(
-                        id =
-                        if (model.liked) R.drawable.favorite_filled_icon
-                        else R.drawable.favorite_border_icon
-                    ), tint =
-                    if (model.liked)
-                        Color.Red
-                    else
-                        Color.White,
+                Icon(painter = painterResource(
+                    id = if (liked) R.drawable.favorite_filled_icon
+                    else R.drawable.favorite_border_icon
+                ),
+                    tint = if (liked) Color.Red
+                    else Color.White,
                     contentDescription = "like Icon",
                     modifier = modifier
-                        .size(28.dp)
+                        .size(23.dp)
                         .clickable {
-                            onLickClick()
-                        }
-                )
+                            onLikeClick()
+                        })
 
                 Spacer(modifier = modifier.width(16.dp))
 
@@ -112,7 +107,7 @@ fun SongItem(
                     painter = painterResource(id = R.drawable.more_icon),
                     tint = Color.White,
                     contentDescription = "options",
-                    modifier = modifier.size(28.dp)
+                    modifier = modifier.size(24.dp)
                 )
             }
 
@@ -124,14 +119,17 @@ fun SongItem(
 
 
 data class SongModel(
-    val image: String,
-    val name: String,
-    val artist: Artist,
-    val liked: Boolean,
+    val image: String, var name: String, val artist: Artist, var liked: Boolean = false
 )
 
 
-data class Artist(val name: String)
+class Artist private constructor(val name: String) {
+    companion object {
+        fun parse(text: String): Artist? {
+            return Artist(text)
+        }
+    }
+}
 
 
 @Preview
@@ -141,8 +139,7 @@ fun SongPreview() {
     val m = SongModel(
         image = "",
         name = "Name",
-        artist = Artist("Artist"),
-        true
+        artist = Artist.parse("Artist")!!,
     )
 
     Column(
@@ -150,7 +147,7 @@ fun SongPreview() {
             .background(darkBackground)
             .fillMaxSize()
     ) {
-        for (i in 0 until 10)
-            SongItem(model = m) {}
+        for (i in 0 until 10) SongItem(model = m, onLikeClick = {}, onClick = {}, liked = false
+        )
     }
 }

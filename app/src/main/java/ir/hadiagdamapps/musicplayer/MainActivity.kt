@@ -1,6 +1,7 @@
 package ir.hadiagdamapps.musicplayer
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -18,6 +19,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.icons.Icons
+import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -25,6 +27,11 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -46,7 +53,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             MusicPlayerTheme {
 
-                MainScreen()
+                ir.hadiagdamapps.musicplayer.Preview()
 
             }
         }
@@ -55,14 +62,42 @@ class MainActivity : ComponentActivity() {
 
 
 @Composable
+fun TopSearchBar(modifier: Modifier = Modifier) {
+    Box(
+        modifier = modifier
+            .height(86.dp)
+            .fillMaxWidth()
+            .background(Color.Black)
+    ) {
+
+    }
+}
+
+@Composable
+fun MainScreen() {
+    Surface {
+        Scaffold(topBar = {
+            TopSearchBar()
+        }) {
+            it
+        }
+    }
+}
+
+
+@Composable
 fun MusicContainer(
     modifier: Modifier = Modifier,
-    list: List<SongModel>,
+    list: Array<SongModel>,
     shuffleIcon: Painter,
     shuffleClick: () -> Unit,
     orderClick: () -> Unit,
-    onItemLiked: (model: SongModel) -> Unit
 ) {
+
+    var r by remember {
+        mutableStateOf(list)
+    }
+
     Column(
         modifier = modifier
             .background(darkBackground)
@@ -103,39 +138,16 @@ fun MusicContainer(
 
 
         LazyColumn {
-            items(list) { model ->
-                SongItem(model = model) {
-                    onItemLiked(model)
-                }
+            itemsIndexed(r) { index, model ->
+                var liked by rememberSaveable { mutableStateOf(model.liked) }
+                SongItem(model = model,
+                    onLikeClick = { liked = !liked },
+                    onClick = {},
+                    liked = liked
+                )
             }
         }
 
-    }
-}
-
-
-@Composable
-fun TopSearchBar(modifier: Modifier = Modifier) {
-    Box(
-        modifier = modifier
-            .height(86.dp)
-            .fillMaxWidth()
-            .background(Color.Black)
-    ) {
-
-    }
-}
-
-@Composable
-fun MainScreen() {
-    Surface {
-        Scaffold(
-            topBar = {
-                TopSearchBar()
-            }
-        ) {
-            it
-        }
     }
 }
 
@@ -143,7 +155,16 @@ fun MainScreen() {
 @Preview
 @Composable
 fun Preview() {
-    MainScreen()
+    val l = Array(10) { i ->
+        SongModel(
+            image = "", "music $i", Artist.parse("artist")!!, i % 2 == 0
+        )
+    }
+
+    MusicContainer(list = l,
+        shuffleIcon = painterResource(id = R.drawable.shuffle_repeat_icon),
+        shuffleClick = { /*TODO*/ },
+        orderClick = {})
 }
 
 
