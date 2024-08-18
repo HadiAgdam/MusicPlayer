@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -47,13 +48,20 @@ import ir.hadiagdamapps.musicplayer.ui.theme.MusicPlayerTheme
 import ir.hadiagdamapps.musicplayer.ui.theme.darkBackground
 
 class MainActivity : ComponentActivity() {
+
+    private val viewModel by viewModels<MusicViewModel>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
             MusicPlayerTheme {
 
-                ir.hadiagdamapps.musicplayer.Preview()
+                MainScreen(
+                    list = viewModel.songsList,
+                    shuffleMode = viewModel.shuffleMode,
+                    changeShuffle = viewModel::changeShuffle,
+                    changeOrderClick = viewModel::changeOrder
+                )
 
             }
         }
@@ -74,12 +82,26 @@ fun TopSearchBar(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun MainScreen() {
+fun MainScreen(
+    list: List<SongModel>,
+    shuffleMode: ShuffleMode,
+    changeShuffle: () -> Unit,
+    changeOrderClick: () -> Unit
+) {
     Surface {
         Scaffold(topBar = {
             TopSearchBar()
         }) {
-            it
+
+            MusicContainer(
+                modifier = Modifier.padding(it),
+                list = list,
+                shuffleMode = shuffleMode,
+                shuffleClick = changeShuffle,
+                orderClick = changeOrderClick
+            )
+
+
         }
     }
 }
@@ -88,8 +110,8 @@ fun MainScreen() {
 @Composable
 fun MusicContainer(
     modifier: Modifier = Modifier,
-    list: Array<SongModel>,
-    shuffleIcon: Painter,
+    list: List<SongModel>,
+    shuffleMode: ShuffleMode,
     shuffleClick: () -> Unit,
     orderClick: () -> Unit,
 ) {
@@ -120,7 +142,7 @@ fun MusicContainer(
                 IconButton(onClick = shuffleClick) {
                     Icon(
                         modifier = Modifier.size(24.dp),
-                        painter = shuffleIcon,
+                        painter = painterResource(id = shuffleMode.painterResId),
                         contentDescription = "shuffle icon",
                         tint = Color.White
                     )
@@ -138,9 +160,10 @@ fun MusicContainer(
 
 
         LazyColumn {
-            itemsIndexed(r) { index, model ->
+            itemsIndexed(r) { _, model ->
                 var liked by rememberSaveable { mutableStateOf(model.liked) }
-                SongItem(model = model,
+                SongItem(
+                    model = model,
                     onLikeClick = { liked = !liked },
                     onClick = {},
                     liked = liked
@@ -155,16 +178,7 @@ fun MusicContainer(
 @Preview
 @Composable
 fun Preview() {
-    val l = Array(10) { i ->
-        SongModel(
-            image = "", "music $i", Artist.parse("artist")!!, i % 2 == 0
-        )
-    }
 
-    MusicContainer(list = l,
-        shuffleIcon = painterResource(id = R.drawable.shuffle_repeat_icon),
-        shuffleClick = { /*TODO*/ },
-        orderClick = {})
 }
 
 
