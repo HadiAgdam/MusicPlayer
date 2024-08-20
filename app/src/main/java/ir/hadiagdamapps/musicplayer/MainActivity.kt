@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -56,13 +57,20 @@ class MainActivity : ComponentActivity() {
         setContent {
             MusicPlayerTheme {
 
-                MainScreen(
-                    list = viewModel.songsList,
-                    shuffleMode = viewModel.shuffleMode,
-                    changeShuffle = viewModel::changeShuffle,
-                    changeOrderClick = viewModel::changeOrder
-                )
+                Scaffold(
+                    topBar = { TopSearchBar() },
+                    bottomBar = {}
+                ) {
 
+                    MusicContainer(
+                        modifier = Modifier.padding(it),
+                        list = viewModel.songsList,
+                        shuffleMode = viewModel.shuffleMode,
+                        shuffleClick = viewModel::changeShuffle,
+                        orderClick = viewModel::changeOrder
+                    )
+
+                }
             }
         }
     }
@@ -78,31 +86,6 @@ fun TopSearchBar(modifier: Modifier = Modifier) {
             .background(Color.Black)
     ) {
 
-    }
-}
-
-@Composable
-fun MainScreen(
-    list: List<SongModel>,
-    shuffleMode: ShuffleMode,
-    changeShuffle: () -> Unit,
-    changeOrderClick: () -> Unit
-) {
-    Surface {
-        Scaffold(topBar = {
-            TopSearchBar()
-        }) {
-
-            MusicContainer(
-                modifier = Modifier.padding(it),
-                list = list,
-                shuffleMode = shuffleMode,
-                shuffleClick = changeShuffle,
-                orderClick = changeOrderClick
-            )
-
-
-        }
     }
 }
 
@@ -173,6 +156,7 @@ fun MusicContainer(
 
     }
 }
+
 
 
 @Preview
