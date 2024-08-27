@@ -34,7 +34,7 @@ fun MusicPlayerApp() {
 
     val navController = rememberNavController()
 
-    NavHost(navController = navController, startDestination = "songsScreen") {
+    NavHost(navController = navController, startDestination = Screen.SongsScreen.route) {
 
         composable(Screen.SongsScreen.route) {
             SongScreen(navController, viewModel)
