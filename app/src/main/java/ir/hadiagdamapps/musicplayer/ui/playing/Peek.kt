@@ -100,7 +100,7 @@ fun Peek(
                             if (playing)
                                 R.drawable.pause_icon
                             else
-                                R.drawable.play_icom
+                                R.drawable.play_icon
                         ),
                         contentDescription = null,
                         tint = Color.White,
