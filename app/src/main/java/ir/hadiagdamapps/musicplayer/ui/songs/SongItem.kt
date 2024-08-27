@@ -1,4 +1,4 @@
-package ir.hadiagdamapps.musicplayer
+package ir.hadiagdamapps.musicplayer.ui.songs
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -27,13 +27,16 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import ir.hadiagdamapps.musicplayer.R
+import ir.hadiagdamapps.musicplayer.models.Artist
+import ir.hadiagdamapps.musicplayer.models.Song
 import ir.hadiagdamapps.musicplayer.ui.theme.darkBackground
 
 
 @Composable
 fun SongItem(
     modifier: Modifier = Modifier,
-    model: SongModel,
+    model: Song,
     onLikeClick: () -> Unit,
     onClick: () -> Unit,
     liked: Boolean
@@ -109,25 +112,12 @@ fun SongItem(
 }
 
 
-data class SongModel(
-    val image: String, var name: String, val artist: Artist, var liked: Boolean = false
-)
-
-
-class Artist private constructor(val name: String) {
-    companion object {
-        fun parse(text: String): Artist? {
-            return Artist(text)
-        }
-    }
-}
-
 
 @Preview
 @Composable
 fun SongPreview() {
 
-    val m = SongModel(
+    val m = Song(
         image = "",
         name = "Name",
         artist = Artist.parse("Artist")!!,
