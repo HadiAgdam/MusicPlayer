@@ -6,15 +6,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavController
 import ir.hadiagdamapps.musicplayer.models.ShuffleMode
 import ir.hadiagdamapps.musicplayer.ui.components.SongsListContainer
 import ir.hadiagdamapps.musicplayer.ui.components.TopSearchBar
 import ir.hadiagdamapps.musicplayer.ui.theme.MusicPlayerTheme
+import ir.hadiagdamapps.musicplayer.ui.viewmodels.SongsViewModel
 
 @Composable
-fun SongScreen() {
-
-    val viewModel: SongsViewModel = SongsViewModel()
+fun SongScreen(navController: NavController, viewModel: SongsViewModel) {
 
     val songsList by viewModel.songsList.observeAsState(emptyList())
     val shuffleMode by viewModel.shuffleMode.observeAsState(ShuffleMode.Repeat)
