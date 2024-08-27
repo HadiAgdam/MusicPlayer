@@ -1,4 +1,4 @@
-package ir.hadiagdamapps.musicplayer.ui.songs
+package ir.hadiagdamapps.musicplayer.ui.screens
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
@@ -7,6 +7,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import ir.hadiagdamapps.musicplayer.models.ShuffleMode
+import ir.hadiagdamapps.musicplayer.ui.components.SongsListContainer
+import ir.hadiagdamapps.musicplayer.ui.components.TopSearchBar
 import ir.hadiagdamapps.musicplayer.ui.theme.MusicPlayerTheme
 
 @Composable

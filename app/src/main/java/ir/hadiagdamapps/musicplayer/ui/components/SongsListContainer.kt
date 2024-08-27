@@ -1,4 +1,4 @@
-package ir.hadiagdamapps.musicplayer.ui.songs
+package ir.hadiagdamapps.musicplayer.ui.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
