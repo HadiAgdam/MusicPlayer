@@ -1,4 +1,4 @@
-package ir.hadiagdamapps.musicplayer.ui.songs
+package ir.hadiagdamapps.musicplayer.ui.viewmodels
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
