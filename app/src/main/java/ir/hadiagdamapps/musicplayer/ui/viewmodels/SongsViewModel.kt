@@ -14,6 +14,27 @@ class SongsViewModel : ViewModel() {
     private val _shuffleMode: MutableLiveData<ShuffleMode> = MutableLiveData(ShuffleMode.Repeat)
     val shuffleMode: LiveData<ShuffleMode> = _shuffleMode
 
+    private val _playingSong = MutableLiveData<Song?>(null)
+    val playingSong: LiveData<Song?> = _playingSong
+
+    private val _progress = MutableLiveData(0f)
+    val progress: LiveData<Float> = _progress
+
+    private val _playing = MutableLiveData(false)
+    val playing: LiveData<Boolean> = _playing
+
+
+    fun updateProgressManual(progress: Float) {
+
+    }
+
+    fun skipNext() {
+
+    }
+
+    fun pausePlay() {
+
+    }
 
     fun changeShuffle() {
         TODO()
