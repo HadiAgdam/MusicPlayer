@@ -37,7 +37,7 @@ fun SongsListContainer(
     list: List<Song>,
     shuffleMode: ShuffleMode,
     shuffleClick: () -> Unit,
-    orderClick: () -> Unit,
+    onOrderChangeClick: () -> Unit,
 ) {
 
     var r by remember {
@@ -71,7 +71,7 @@ fun SongsListContainer(
                         tint = Color.White
                     )
                 }
-                IconButton(onClick = orderClick) {
+                IconButton(onClick = onOrderChangeClick) {
                     Icon(
                         modifier = Modifier.size(24.dp),
                         painter = painterResource(id = R.drawable.sort_icon),
