@@ -82,11 +82,11 @@ fun CurrentSong(
                     shuffleMode = ShuffleMode.Repeat,
                     playing = playing,
                     liked = song.liked,
-                    onOrderChangeClick = {},
-                    onSkipNextClick = {},
-                    onPausePlayClick = {},
-                    onSkipPreviousClick = {},
-                    onLikeClick = {})
+                    onOrderChangeClick = onOrderChangeClick,
+                    onSkipNextClick = onSkipNextClick,
+                    onPausePlayClick = onPlayPauseClick,
+                    onSkipPreviousClick = onSkipPreviousClick,
+                    onLikeClick = onLikeClick)
             }
         }
 
