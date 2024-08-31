@@ -30,7 +30,7 @@ fun SongScreen(navController: NavController, viewModel: SongsViewModel) {
                 list = songsList,
                 shuffleMode = shuffleMode,
                 shuffleClick = viewModel::changeShuffle,
-                orderClick = viewModel::changeOrder
+                onOrderChangeClick = viewModel::changeOrder
             )
 
         }
