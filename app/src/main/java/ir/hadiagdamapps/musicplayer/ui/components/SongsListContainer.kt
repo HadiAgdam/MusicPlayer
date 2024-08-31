@@ -38,9 +38,10 @@ fun SongsListContainer(
     shuffleMode: ShuffleMode,
     shuffleClick: () -> Unit,
     onOrderChangeClick: () -> Unit,
+    onLikeClick: (song: Song) -> Unit
 ) {
 
-    var r by remember {
+    val r by remember {
         mutableStateOf(list)
     }
 
@@ -84,12 +85,11 @@ fun SongsListContainer(
 
         LazyColumn {
             itemsIndexed(r) { _, model ->
-                var liked by rememberSaveable { mutableStateOf(model.liked) }
                 SongItem(
                     model = model,
-                    onLikeClick = { liked = !liked },
+                    onLikeClick = { onLikeClick(model) },
                     onClick = {},
-                    liked = liked
+                    liked = model.liked
                 )
             }
         }
