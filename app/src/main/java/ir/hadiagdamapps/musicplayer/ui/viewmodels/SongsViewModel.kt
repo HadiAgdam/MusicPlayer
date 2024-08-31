@@ -32,6 +32,14 @@ class SongsViewModel : ViewModel() {
 
     }
 
+    fun skipPrevious() {
+        TODO()
+    }
+
+    fun like(song: Song) {
+        TODO()
+    }
+
     fun pausePlay() {
 
     }
