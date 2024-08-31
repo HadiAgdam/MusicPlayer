@@ -49,6 +49,7 @@ import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import ir.hadiagdamapps.musicplayer.R
 import ir.hadiagdamapps.musicplayer.ui.theme.lightBackground
+import ir.hadiagdamapps.musicplayer.ui.theme.lightBackgroundGradient
 import ir.hadiagdamapps.musicplayer.ui.theme.primary
 
 
@@ -69,7 +70,7 @@ fun RotatingDisk(
             .background(Color.White)
             .padding(3.dp)
             .clip(CircleShape.copy(CornerSize(100)))
-            .background(lightBackground), contentAlignment = Alignment.Center
+            .background(lightBackgroundGradient), contentAlignment = Alignment.Center
     ) {
 
         CircularProgressIndicator(
