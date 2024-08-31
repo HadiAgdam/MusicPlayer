@@ -32,9 +32,11 @@ fun VerticalControlBar(
     shuffleMode: ShuffleMode,
     playing: Boolean,
     liked: Boolean,
-    reOrderClick: () -> Unit,
-    skipNextClick: () -> Unit,
-    pausePlayClick: () -> Unit,
+    onOrderChangeClick: () -> Unit,
+    onSkipNextClick: () -> Unit,
+    onPausePlayClick: () -> Unit,
+    onSkipPreviousClick: () -> Unit,
+    onLikeClick: () -> Unit
 ) {
     val space = 24.dp
     Column(
@@ -51,7 +53,7 @@ fun VerticalControlBar(
 
     ) {
 
-        IconButton(onClick = reOrderClick) {
+        IconButton(onClick = onOrderChangeClick) {
             Icon(
                 modifier = Modifier
                     .fillMaxSize()
@@ -62,7 +64,7 @@ fun VerticalControlBar(
             )
         }
         Spacer(modifier = Modifier.height(space))
-        IconButton(onClick = skipNextClick) {
+        IconButton(onClick = onSkipNextClick) {
             Icon(
                 modifier = Modifier.fillMaxSize(),
                 painter = painterResource(id = R.drawable.skip_next_icon),
@@ -71,7 +73,7 @@ fun VerticalControlBar(
             )
         }
         Spacer(modifier = Modifier.height(space))
-        IconButton(onClick = skipNextClick) {
+        IconButton(onClick = onPausePlayClick) {
             Icon(
                 modifier = Modifier.fillMaxSize(),
                 painter = painterResource(id = if (playing) R.drawable.pause_icon else R.drawable.play_icon),
@@ -80,7 +82,7 @@ fun VerticalControlBar(
             )
         }
         Spacer(modifier = Modifier.height(space))
-        IconButton(onClick = skipNextClick) {
+        IconButton(onClick = onSkipPreviousClick) {
             Icon(
                 modifier = Modifier.fillMaxSize(),
                 painter = painterResource(id = R.drawable.skip_previous_icon),
@@ -89,7 +91,7 @@ fun VerticalControlBar(
             )
         }
         Spacer(modifier = Modifier.height(space))
-        IconButton(onClick = skipNextClick) {
+        IconButton(onClick = onLikeClick) {
             Icon(
                 modifier = Modifier
                     .fillMaxSize()
@@ -100,23 +102,5 @@ fun VerticalControlBar(
             )
         }
 
-    }
-}
-
-@Preview
-@Composable
-fun VerticalControlBarPreview() {
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Color.Black),
-        contentAlignment = Alignment.Center
-    ) {
-        VerticalControlBar(ShuffleMode.Repeat,
-            playing = true,
-            liked = true,
-            reOrderClick = {},
-            skipNextClick = {},
-            pausePlayClick = {})
     }
 }
