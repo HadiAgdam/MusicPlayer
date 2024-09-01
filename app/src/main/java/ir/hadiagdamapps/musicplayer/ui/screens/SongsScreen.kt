@@ -17,7 +17,7 @@ import ir.hadiagdamapps.musicplayer.ui.viewmodels.SongsViewModel
 @Composable
 fun SongScreen(navController: NavController, viewModel: SongsViewModel) {
 
-    val songsList by viewModel.songsList.observeAsState(emptyList())
+    val songsList by viewModel.songsList.collectAsState()
     val shuffleMode by viewModel.shuffleMode.observeAsState(ShuffleMode.Repeat)
 
     MusicPlayerTheme {
