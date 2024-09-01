@@ -3,6 +3,7 @@ package ir.hadiagdamapps.musicplayer.ui.screens
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
@@ -30,7 +31,8 @@ fun SongScreen(navController: NavController, viewModel: SongsViewModel) {
                 list = songsList,
                 shuffleMode = shuffleMode,
                 shuffleClick = viewModel::changeShuffle,
-                onOrderChangeClick = viewModel::changeOrder
+                onOrderChangeClick = viewModel::changeOrder,
+                onLikeClick = viewModel::like
             )
 
         }
