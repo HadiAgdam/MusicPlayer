@@ -1,5 +1,6 @@
 package ir.hadiagdamapps.musicplayer
 
+import android.content.Context
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -23,16 +24,18 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
 
-            MusicPlayerApp()
+            MusicPlayerApp(this)
         }
     }
 }
 
 @Composable
-fun MusicPlayerApp() {
+fun MusicPlayerApp(context: Context) {
     val viewModel: SongsViewModel = viewModel()
 
     val navController = rememberNavController()
+
+    viewModel.fetchSongs(context.contentResolver)
 
     NavHost(navController = navController, startDestination = Screen.SongsScreen.route) {
 
