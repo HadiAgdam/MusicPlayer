@@ -24,13 +24,13 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.rememberImagePainter
 import ir.hadiagdamapps.musicplayer.R
-import ir.hadiagdamapps.musicplayer.models.Artist
 import ir.hadiagdamapps.musicplayer.models.Song
-import ir.hadiagdamapps.musicplayer.ui.theme.darkBackground
 
 
 @Composable
@@ -49,15 +49,22 @@ fun SongItem(
             .padding(8.dp)
     ) {
 
-        Row(horizontalArrangement = Arrangement.SpaceBetween,
+        Row(
             modifier = modifier
                 .fillMaxWidth()
                 .clickable { onClick() }) {
 
-            Row {
+            Row(
+                modifier = Modifier
+                    .fillMaxHeight()
+                    .fillMaxWidth(.8f)
+            ) {
+                println("image : ${model.image}")
                 Image(
-                    modifier = modifier.clip(RoundedCornerShape(16)),
-                    painter = painterResource(id = R.drawable.ic_launcher_background),
+                    painter = rememberImagePainter(data = model.image),
+                    modifier = modifier
+                        .clip(RoundedCornerShape(16))
+                        .size(48.dp),
                     contentDescription = "Image"
                 )
                 Column(
@@ -67,20 +74,27 @@ fun SongItem(
                     verticalArrangement = Arrangement.Center
                 ) {
                     Text(
+                        modifier = Modifier.fillMaxWidth(),
                         text = model.name,
                         fontSize = 18.sp,
                         fontWeight = FontWeight.Bold,
                         color = Color.White,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
                     )
                     Text(
-                        text = model.artist.name, fontSize = 14.sp, color = Color.Gray
+                        text = model.artist, fontSize = 14.sp, color = Color.Gray
                     )
                 }
             }
 
 
             Row(
-                verticalAlignment = Alignment.CenterVertically, modifier = modifier.fillMaxHeight()
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Center,
+                modifier = modifier
+                    .fillMaxHeight()
+                    .fillMaxWidth()
             ) {
                 Icon(painter = painterResource(
                     id = if (liked) R.drawable.favorite_filled_icon
@@ -90,7 +104,7 @@ fun SongItem(
                     else Color.White,
                     contentDescription = "like Icon",
                     modifier = modifier
-                        .size(23.dp)
+                        .size(24.dp)
                         .clickable {
                             onLikeClick()
                         })
@@ -112,22 +126,26 @@ fun SongItem(
 }
 
 
-
 @Preview
 @Composable
 fun SongPreview() {
-
-    val m = Song(
+    val song = Song(
+        id = 0,
         image = "",
-        name = "Name",
-        artist = Artist.parse("Artist")!!,
+        name = "name",
+        artist = "Artist",
+        liked = true,
+        duration = 1000,
+        ""
     )
 
-    Column(
-        modifier = Modifier
-            .background(darkBackground)
-            .fillMaxSize()
-    ) {
-        for (i in 0 until 10) SongItem(model = m, onLikeClick = {}, onClick = {}, liked = false)
+    Column(modifier = Modifier.fillMaxSize()) {
+        SongItem(
+            model = song,
+            onLikeClick = {},
+            onClick = {},
+            liked = false
+        )
     }
 }
+
