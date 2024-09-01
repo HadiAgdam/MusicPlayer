@@ -56,7 +56,7 @@ fun CurrentSong(
 
         Text(text = song.name, style = Typography.titleLarge, color = primary)
         Spacer(modifier = Modifier.height(8.dp))
-        Text(text = song.artist.name, style = Typography.bodyMedium)
+        Text(text = song.artist, style = Typography.bodyMedium)
 
 
         Box(
