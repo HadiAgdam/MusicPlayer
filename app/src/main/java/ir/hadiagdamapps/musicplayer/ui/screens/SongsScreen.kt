@@ -32,7 +32,8 @@ fun SongScreen(navController: NavController, viewModel: SongsViewModel) {
                 shuffleMode = shuffleMode,
                 shuffleClick = viewModel::changeShuffle,
                 onOrderChangeClick = viewModel::changeOrder,
-                onLikeClick = viewModel::like
+                onLikeClick = viewModel::like,
+                onItemClick = viewModel::playSong
             )
 
         }
