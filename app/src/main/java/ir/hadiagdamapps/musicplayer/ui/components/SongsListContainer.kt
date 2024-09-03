@@ -38,7 +38,8 @@ fun SongsListContainer(
     shuffleMode: ShuffleMode,
     shuffleClick: () -> Unit,
     onOrderChangeClick: () -> Unit,
-    onLikeClick: (song: Song) -> Unit
+    onLikeClick: (song: Song) -> Unit,
+    onItemClick: (song: Song) -> Unit
 ) {
 
     val r by remember {
@@ -88,7 +89,7 @@ fun SongsListContainer(
                 SongItem(
                     model = model,
                     onLikeClick = { onLikeClick(model) },
-                    onClick = {},
+                    onClick = { onItemClick(model)},
                     liked = model.liked
                 )
             }
